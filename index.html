@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tặng Nhú Nqim ngày 1/6 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:wght@300;400&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffebee;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #d81b60;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(216, 27, 96, 0.2);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1, h2 {
+            font-family: 'Indie Flower', cursive;
+            color: #d81b60;
+            margin-bottom: 20px;
+        }
+        
+        .menu-btn, .quiz-option {
+            background-color: #f8bbd0;
+            color: #d81b60;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(216, 27, 96, 0.1);
+        }
+        
+        .menu-btn:hover, .quiz-option:hover {
+            background-color: #f48fb1;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(216, 27, 96, 0.15);
+        }
+        
+        .menu-btn:active, .quiz-option:active {
+            transform: translateY(1px);
+        }
+        
+        #main-menu {
+            animation: fadeIn 1s ease;
+        }
+        
+        .quiz-container, .result-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .question-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 10px auto;
+            border: 3px solid #f8bbd0;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .quiz-option {
+            width: 90%;
+            margin: 8px auto;
+            text-align: left;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .quiz-option::before {
+            content: "❤";
+            position: absolute;
+            left: 10px;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 30px;
+            animation: bounce 0.5s;
+        }
+        
+        .correct {
+            color: #4caf50;
+        }
+        
+        .wrong {
+            color: #f44336;
+        }
+        
+        .compliment {
+            color: #d81b60;
+            font-style: italic;
+            margin-top: 10px;
+            animation: float 2s infinite;
+        }
+        
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            opacity: 0;
+            animation: float-up 4s linear forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-7px);}
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .music-control {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #d81b60;
+            cursor: pointer;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #f8bbd0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #d81b60;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .result-container img {
+            width: 150px;
+            height: auto;
+            margin: 20px 0;
+            animation: float 3s infinite;
+        }
+        
+        .voice-message {
+            margin: 20px 0;
+        }
+
+        /* NEW STYLE FOR PLAY BUTTON */
+        .play-voice-btn {
+            background-color: #f48fb1;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            margin: 15px auto;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(216, 27, 96, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .play-voice-btn:hover {
+            background-color: #d81b60;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 400px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            .question {
+                font-size: 16px;
+            }
+            
+            .question-image {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .quiz-option {
+                font-size: 14px;
+                padding: 10px 15px 10px 30px;
+            }
+
+            .play-voice-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="music-control" id="musicToggle">🔊</button>
+        <audio id="bgMusic" loop>
+            <source src="love-song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <!-- Hidden voice message audio -->
+        <audio id="voiceMessage" preload="auto">
+            <source src="ancut.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <div class="hearts" id="heartsContainer"></div>
+        
+        <div id="main-menu">
+            <h1>Tặng gx để gx vui thêm từng ngày!!</h1>
+            <p>Gx cbi chưa?!?!!?</p>
+            <button class="menu-btn" id="startBtn">Start Quiz</button>
+            <p>Bấm ngay và luôn</p>
+        </div>
+        
+        <div class="quiz-container" id="quizContainer">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <h2 id="questionNumber">Question 1</h2>
+            <div class="question" id="questionText"></div>
+            <img class="question-image" id="questionImage" src="" alt="Question image">
+            <div class="options-container" id="optionsContainer"></div>
+            <div class="feedback" id="feedback"></div>
+            <div class="compliment" id="compliment"></div>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <h2>Oách xà lách quá gx ơi!!!</h2>
+            <p>Cho tim đc <span id="score">0</span>cm</p>
+            <img src="image6.jpg" alt="Celebration">
+            <p id="finalMessage"></p>
+            <div class="voice-message">
+                <p>Lời chúc tui gửi b</p>
+                <!-- NEW PLAY BUTTON REPLACES AUDIO PLAYER -->
+                <button class="play-voice-btn" id="playVoiceBtn">
+                    <span>🎤</span> Nghe tin nhắn của tui nè
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions array with images
+        const questions = [
+            {
+                question: "Đố b vì sao con gà qua đường (hint: C)",
+                image: "image1.jpg", // Cute chicken image
+                options: ["Vì nó thấy nhím nqu", "Vì kfc ngon", "Vì nó thấy kah", "chệu"],
+                correct: 0,
+                compliment: "Juan r!!! đến con gà còn thấy bạn xinh."
+            },
+            {
+                question: "Đố b máy gì chậm trễ",
+                image: "image2.jpg", // Slow turtle image
+                options: ["máy khoan", "máy cmmb", "svat", "ko bik"],
+                correct: 0,
+                compliment: "Juan r! bcuoi ko?!?!"
+            },
+            {
+                question: "Đố b tui buồn đến mức nào khi b bùn",
+                image: "image3.jpg", // Sad puppy image
+                options: ["ko bùn", "bùn 1 ít", "bùn 1 tý", "bùn thối chim"],
+                correct: 3,
+                compliment: "Chuẩn!!!!"
+            },
+            {
+                question: "Vì sao cốc nước của t lại đổ??",
+                image: "image4.jpg", // Spilled glass image
+                options: ["Vì nó thấy gx", "Do m ngu", "Do gay", "Do m ngáo"],
+                correct: 0,
+                compliment: "Đến cả cốc nước còn đổ gx..."
+            },
+            {
+                question: "Ai đẹp trai nhất dưới đây (đáp án cũ ko còn đúng nữa)",
+                image: "image5.jpg", // Heart image
+                options: ["cao ahn hieu", "j97", "son tung mtp", "nhím nqu"],
+                correct: 0,
+                compliment: "Troll th!!! vẫn là bố m 🤬🤬"
+            },
+            {
+                question: "B có thích những cái củ lìn này tui làm cho b khong",
+                image: "image5.jpg", // Cute couple image
+                options: ["đếch", "ko", "phiền", "cóa"],
+                correct: 3,
+                compliment: "!!!"
+            }
+        ];
+
+        // DOM elements
+        const mainMenu = document.getElementById('main-menu');
+        const quizContainer = document.getElementById('quizContainer');
+        const resultContainer = document.getElementById('resultContainer');
+        const startBtn = document.getElementById('startBtn');
+        const questionText = document.getElementById('questionText');
+        const questionImage = document.getElementById('questionImage');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const compliment = document.getElementById('compliment');
+        const questionNumber = document.getElementById('questionNumber');
+        const progressBar = document.getElementById('progressBar');
+        const scoreElement = document.getElementById('score');
+        const finalMessage = document.getElementById('finalMessage');
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+        const heartsContainer = document.getElementById('heartsContainer');
+        const voiceMessage = document.getElementById('voiceMessage');
+        const playVoiceBtn = document.getElementById('playVoiceBtn');
+
+        // Quiz variables
+        let currentQuestion = 0;
+        let score = 0;
+        let musicPlaying = false;
+
+        // Start quiz
+        startBtn.addEventListener('click', startQuiz);
+
+        // Music control
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // NEW: Voice message play button handler
+playVoiceBtn.addEventListener('click', function() {
+    bgMusic.pause(); // <--- add this line here!
+    voiceMessage.currentTime = 0; // Rewind to start
+    voiceMessage.play().catch(e => {
+        console.error("Playback failed:", e);
+        playVoiceBtn.textContent = "Lỗi rồi 😢 Bấm lại đi";
+        playVoiceBtn.style.backgroundColor = "#f44336";
+    });
+});
+
+        // NEW: Voice message error handling
+        voiceMessage.addEventListener('error', function() {
+            console.error("Audio error:", voiceMessage.error);
+            playVoiceBtn.textContent = "Không tìm thấy tin nhắn 😢";
+            playVoiceBtn.style.backgroundColor = "#f44336";
+        });
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = "dạ e xloi a thịnh suy hát tiếp đi";
+            } else {
+                bgMusic.play();
+                musicToggle.textContent = "thịnh suy im mồm đi";
+            }
+            musicPlaying = !musicPlaying;
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            mainMenu.style.display = 'none';
+            resultContainer.style.display = 'none';
+            quizContainer.style.display = 'block';
+            loadQuestion();
+            createHearts();
+            
+            // Start music if not already playing
+            if (!musicPlaying) {
+                toggleMusic();
+            }
+        }
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            questionText.textContent = question.question;
+            questionImage.src = question.image;
+            questionImage.alt = "Illustration for: " + question.question;
+            questionNumber.textContent = `Question ${currentQuestion + 1}`;
+            progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'quiz-option';
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+            
+            // Clear feedback and compliment
+            feedback.textContent = '';
+            feedback.className = 'feedback';
+            compliment.textContent = '';
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = questions[currentQuestion];
+            
+            if (selectedIndex === question.correct) {
+                // Correct answer
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                compliment.textContent = question.compliment;
+                score++;
+                
+                // Create celebration hearts
+                createHearts(10);
+                
+                // Move to next question after delay
+                setTimeout(() => {
+                    currentQuestion++;
+                    if (currentQuestion < questions.length) {
+                        loadQuestion();
+                    } else {
+                        showResults();
+                    }
+                }, 1500);
+            } else {
+                // Wrong answer
+                feedback.textContent = 'Sai r nhím nqu';
+                feedback.className = 'feedback wrong';
+                compliment.textContent = 'Lại đi';
+                
+                // Shake animation for wrong answer
+                optionsContainer.childNodes[selectedIndex].style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    optionsContainer.childNodes[selectedIndex].style.animation = '';
+                }, 500);
+            }
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultContainer.style.display = 'block';
+            progressBar.style.width = '100%';
+            scoreElement.textContent = score;
+            
+            // Custom message based on score
+            if (score === questions.length) {
+                finalMessage.textContent = 'Xong rồi nhím nqu ơi!!!! ❤️';
+            } else if (score >= questions.length * 0.7) {
+                finalMessage.textContent = 'xong rùi đó!';
+            } else {
+                finalMessage.textContent = 'mịa';
+            }
+            
+            // Create celebration hearts
+            createHearts(20);
+        }
+
+        function createHearts(count = 5) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    heartsContainer.appendChild(heart);
+                    
+                    // Remove heart after animation
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 4000);
+                }, i * 300);
+            }
+        }
+
+        // Initial heart creation
+        createHearts(3);
+    </script>
+</body>
+</html>
