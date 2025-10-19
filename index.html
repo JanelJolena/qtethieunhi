@@ -483,7 +483,7 @@ playVoiceBtn.addEventListener('click', function() {
                 }, 1500);
             } else {
                 // Wrong answer
-                feedback.textContent = 'Sai r nhím nqu';
+                feedback.textContent = 'Sai r m';
                 feedback.className = 'feedback wrong';
                 compliment.textContent = 'Lại đi';
                 
@@ -503,7 +503,7 @@ playVoiceBtn.addEventListener('click', function() {
             
             // Custom message based on score
             if (score === questions.length) {
-                finalMessage.textContent = 'Xong rồi nhím nqu ơi!!!! ❤️';
+                finalMessage.textContent = 'Xong rồi ngiu ơi!!!! ❤️';
             } else if (score >= questions.length * 0.7) {
                 finalMessage.textContent = 'xong rùi đó!';
             } else {
@@ -538,4 +538,5 @@ playVoiceBtn.addEventListener('click', function() {
     </script>
 </body>
 </html>
+
 
